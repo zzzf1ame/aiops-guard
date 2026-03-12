@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2024-03-13
+
+### Added
+- ⚡ **Async/await support** - Native support for asynchronous functions
+- 🛡️ **Exception handling** - Robust error handling for unknown models and edge cases
+- 📝 **Production-ready** - Fallback pricing for unknown models prevents crashes
+- 📚 **Async examples** - New `examples/async_example.py` demonstrating async usage
+- 🎯 **"Why This Matters"** section in README explaining production monitoring importance
+- 🧪 **Exception handling tests** - New `test_exception_handling.py` for edge cases
+
+### Changed
+- Improved `ModelPricing.get_pricing()` with try-except for unknown models
+- Enhanced `calculate_cost()` with exception handling to prevent crashes
+- Updated README with real-world impact examples and use cases
+- Reorganized README with "Why This Matters" section at the top
+- Added async support to feature list
+- Updated roadmap to reflect completed features
+
+### Fixed
+- Prevents crashes when using unsupported model names
+- Graceful fallback to GPT-3.5 pricing for unknown models
+- Handles empty or malformed model names without errors
+
 ## [0.1.0] - 2024-03-11
 
 ### Added
@@ -44,16 +67,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned Features
-- Async function support
-- Database persistence
-- Web dashboard
-- Alert thresholds
-- Custom pricing configuration
-- Batch operation support
-- Historical trend analysis
-- Export to JSON/CSV
-- Integration with monitoring tools
+- [ ] Database persistence
+- [ ] Web dashboard
+- [ ] Alert thresholds
+- [ ] Custom pricing configuration
+- [ ] Batch operation support
+- [ ] Historical trend analysis
+- [ ] Export to JSON/CSV
+- [ ] Integration with monitoring tools
+- [ ] PyPI package publication
 
 ---
 
-[0.1.0]: https://github.com/yourusername/aiops-guard/releases/tag/v0.1.0
+[0.2.0]: https://github.com/zzzflame/aiops-guard/releases/tag/v0.2.0
+[0.1.0]: https://github.com/zzzflame/aiops-guard/releases/tag/v0.1.0

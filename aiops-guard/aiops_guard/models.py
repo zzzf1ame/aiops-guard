@@ -42,33 +42,41 @@ class ModelPricing:
             
         Returns:
             Tuple of (input_price, output_price) per 1M tokens
+            
+        Note:
+            Returns GPT-3.5 Turbo pricing as fallback for unknown models
         """
-        model_lower = model_name.lower()
-        
-        # GPT-4 models
-        if "gpt-4-turbo" in model_lower or "gpt-4-1106" in model_lower:
-            return (cls.GPT_4_TURBO_INPUT, cls.GPT_4_TURBO_OUTPUT)
-        elif "gpt-4-32k" in model_lower:
-            return (cls.GPT_4_32K_INPUT, cls.GPT_4_32K_OUTPUT)
-        elif "gpt-4" in model_lower:
-            return (cls.GPT_4_INPUT, cls.GPT_4_OUTPUT)
-        
-        # GPT-3.5 models
-        elif "gpt-3.5-turbo-16k" in model_lower:
-            return (cls.GPT_3_5_TURBO_16K_INPUT, cls.GPT_3_5_TURBO_16K_OUTPUT)
-        elif "gpt-3.5-turbo" in model_lower:
+        try:
+            model_lower = model_name.lower()
+            
+            # GPT-4 models
+            if "gpt-4-turbo" in model_lower or "gpt-4-1106" in model_lower:
+                return (cls.GPT_4_TURBO_INPUT, cls.GPT_4_TURBO_OUTPUT)
+            elif "gpt-4-32k" in model_lower:
+                return (cls.GPT_4_32K_INPUT, cls.GPT_4_32K_OUTPUT)
+            elif "gpt-4" in model_lower:
+                return (cls.GPT_4_INPUT, cls.GPT_4_OUTPUT)
+            
+            # GPT-3.5 models
+            elif "gpt-3.5-turbo-16k" in model_lower:
+                return (cls.GPT_3_5_TURBO_16K_INPUT, cls.GPT_3_5_TURBO_16K_OUTPUT)
+            elif "gpt-3.5-turbo" in model_lower:
+                return (cls.GPT_3_5_TURBO_INPUT, cls.GPT_3_5_TURBO_OUTPUT)
+            
+            # Claude models
+            elif "claude-3-opus" in model_lower:
+                return (cls.CLAUDE_3_OPUS_INPUT, cls.CLAUDE_3_OPUS_OUTPUT)
+            elif "claude-3-sonnet" in model_lower:
+                return (cls.CLAUDE_3_SONNET_INPUT, cls.CLAUDE_3_SONNET_OUTPUT)
+            elif "claude-3-haiku" in model_lower:
+                return (cls.CLAUDE_3_HAIKU_INPUT, cls.CLAUDE_3_HAIKU_OUTPUT)
+            
+            # Default to GPT-3.5 Turbo pricing for unknown models
             return (cls.GPT_3_5_TURBO_INPUT, cls.GPT_3_5_TURBO_OUTPUT)
-        
-        # Claude models
-        elif "claude-3-opus" in model_lower:
-            return (cls.CLAUDE_3_OPUS_INPUT, cls.CLAUDE_3_OPUS_OUTPUT)
-        elif "claude-3-sonnet" in model_lower:
-            return (cls.CLAUDE_3_SONNET_INPUT, cls.CLAUDE_3_SONNET_OUTPUT)
-        elif "claude-3-haiku" in model_lower:
-            return (cls.CLAUDE_3_HAIKU_INPUT, cls.CLAUDE_3_HAIKU_OUTPUT)
-        
-        # Default to GPT-3.5 Turbo pricing
-        return (cls.GPT_3_5_TURBO_INPUT, cls.GPT_3_5_TURBO_OUTPUT)
+            
+        except Exception:
+            # Fallback to safe default pricing if any error occurs
+            return (cls.GPT_3_5_TURBO_INPUT, cls.GPT_3_5_TURBO_OUTPUT)
 
 
 @dataclass
