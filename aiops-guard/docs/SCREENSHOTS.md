@@ -1,5 +1,13 @@
 # 📸 Output Examples
 
+## Live Demo
+
+![AIOpsGuard Demo](output-demo.png)
+
+*Complete test execution showing all monitoring features*
+
+---
+
 ## Test Execution Output
 
 ```

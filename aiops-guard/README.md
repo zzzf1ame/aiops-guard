@@ -19,11 +19,15 @@
 
 ---
 
-## 📸 Live Output
+## 📸 Live Demo
 
-See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for complete output examples with beautiful Rich formatting.
+<div align="center">
 
-*Add a screenshot by running `python test_aiops_guard.py` and capturing the terminal output*
+![AIOpsGuard Output](docs/output-demo.png)
+
+*Real-time cost tracking and performance monitoring for your LLM calls*
+
+</div>
 
 ## 🎯 Why This Matters
 
@@ -346,27 +350,38 @@ Built with:
 - [tiktoken](https://github.com/openai/tiktoken) - OpenAI's token counting
 - [rich](https://github.com/Textualize/rich) - Beautiful terminal formatting
 
-## 📞 Support
+Created by **暇格 (Xiage)** - [GitHub](https://github.com/zzzflame)
 
-- 🐛 [Issues](https://github.com/yourusername/aiops-guard/issues)
-- 💬 [Discussions](https://github.com/yourusername/aiops-guard/discussions)
-- 📧 Email: support@aiopsguard.dev
+## 📞 Contact & Support
+
+- 🐛 [Issues](https://github.com/zzzflame/aiops-guard/issues)
+- 💬 [Discussions](https://github.com/zzzflame/aiops-guard/discussions)
+- 📧 Email: 38222540@qq.com
+- 💬 WeChat: xiuzhendaonanxing
+
+## 👨‍💻 Author
+
+**暇格 (Xiage)**
+
+- GitHub: [@zzzflame](https://github.com/zzzflame)
+- Email: 38222540@qq.com
+- WeChat: xiuzhendaonanxing
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/aiops-guard&type=Date)](https://star-history.com/#yourusername/aiops-guard&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=zzzflame/aiops-guard&type=Date)](https://star-history.com/#zzzflame/aiops-guard&Date)
 
 ## 📈 Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/aiops-guard?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/aiops-guard?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/yourusername/aiops-guard?style=social)
+![GitHub stars](https://img.shields.io/github/stars/zzzflame/aiops-guard?style=social)
+![GitHub forks](https://img.shields.io/github/forks/zzzflame/aiops-guard?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/zzzflame/aiops-guard?style=social)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the LLM community**
+**Made with ❤️ by 暇格 (Xiage) for the LLM community**
 
 [⬆ Back to Top](#️-aiopsguard)
 
