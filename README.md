@@ -303,7 +303,7 @@ Built with:
 
 - 🐛 [Issues](https://github.com/yourusername/aiops-guard/issues)
 - 💬 [Discussions](https://github.com/yourusername/aiops-guard/discussions)
-- 📧 Email: support@aiopsguard.dev
+- 📧 Email: 38222540@qq.com
 
 ## ⭐ Star History
 
