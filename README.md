@@ -11,23 +11,42 @@
 
 [Features](#-features) •
 [Quick Start](#-quick-start) •
+[Why This Matters](#-why-this-matters) •
 [Documentation](#-documentation) •
-[Examples](#-examples) •
-[Contributing](#-contributing)
+[Examples](#-examples)
 
 </div>
 
 ---
 
-## 🎯 Why AIOpsGuard?
+## 📸 Live Output
 
-Stop wondering how much your LLM calls cost! AIOpsGuard provides:
+See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for complete output examples with beautiful Rich formatting.
 
-- 💰 **Real-time cost tracking** - Know exactly what you're spending
-- 📊 **Beautiful reports** - Terminal dashboards with Rich
-- ⚡ **Zero overhead** - Minimal performance impact
-- 🎯 **Zero config** - Just add a decorator
-- 🤖 **Multi-agent ready** - Track multiple agents separately
+*Add a screenshot by running `python test_aiops_guard.py` and capturing the terminal output*
+
+## 🎯 Why This Matters
+
+In production environments, **unmonitored AI calls are a financial risk**:
+
+- 💸 A single misconfigured loop can cost thousands in API fees
+- 🔍 Without tracking, you can't optimize model selection or prompt efficiency  
+- 📊 Teams need visibility into which agents/features drive costs
+- ⚠️ Silent failures in LLM calls can go unnoticed for days
+
+**AIOpsGuard solves this** by providing zero-config monitoring that tracks every call, calculates real costs, and alerts you to issues before they impact your budget.
+
+### Real-World Impact
+
+```python
+# Before: No visibility into costs
+response = openai.ChatCompletion.create(...)  # How much did this cost? 🤷
+
+# After: Full transparency
+@AIOpsGuard(agent_name="CustomerSupport", model_name="gpt-4")
+def handle_support_ticket(ticket: str) -> str:
+    return openai.ChatCompletion.create(...)  # ✅ Tracked, costed, monitored
+```
 
 ## ✨ Features
 
@@ -42,6 +61,8 @@ Stop wondering how much your LLM calls cost! AIOpsGuard provides:
 | 📈 **Cost projections** | Daily/monthly estimates |
 | 🎨 **Type-safe** | Full type hints |
 | 🔌 **Framework agnostic** | Works with any LLM library |
+| ⚡ **Async support** | Native async/await compatibility |
+| 🛡️ **Production-ready** | Exception handling & fallbacks |
 
 ## 🚀 Quick Start
 
@@ -144,6 +165,21 @@ Complete examples with per-agent and per-model breakdowns available in [docs/SCR
 
 ## 🎯 Examples
 
+### Async Support
+
+```python
+import asyncio
+from aiops_guard import AIOpsGuard
+
+@AIOpsGuard(agent_name="AsyncAgent", model_name="gpt-4")
+async def async_llm_call(prompt: str) -> str:
+    response = await openai.ChatCompletion.acreate(...)
+    return response
+
+# Works seamlessly with async/await
+result = await async_llm_call("Analyze this data")
+```
+
 ### Track Multiple Agents
 
 ```python
@@ -184,7 +220,10 @@ with open('metrics.json', 'w') as f:
     json.dump(data, f, indent=2)
 ```
 
-More examples in [examples/](examples/) directory.
+More examples in [examples/](examples/) directory:
+- [basic_example.py](examples/basic_example.py) - Simple usage
+- [multi_agent_example.py](examples/multi_agent_example.py) - Multiple agents
+- [async_example.py](examples/async_example.py) - Async/await support
 
 ## 🏗️ Architecture
 
@@ -271,6 +310,12 @@ python examples/basic_example.py
 python test_aiops_guard.py
 ```
 
+### Testing Async Support
+
+```bash
+python examples/async_example.py
+```
+
 ### Code Style
 
 ```bash
@@ -280,7 +325,9 @@ mypy aiops_guard/
 
 ## 🗺️ Roadmap
 
-- [ ] Async function support
+- [x] Sync function support
+- [x] Async function support
+- [x] Exception handling & fallbacks
 - [ ] Database persistence
 - [ ] Web dashboard
 - [ ] Alert thresholds
@@ -299,27 +346,38 @@ Built with:
 - [tiktoken](https://github.com/openai/tiktoken) - OpenAI's token counting
 - [rich](https://github.com/Textualize/rich) - Beautiful terminal formatting
 
-## 📞 Support
+Created by **暇格 (Xiage)** - [GitHub](https://github.com/zzzflame)
 
-- 🐛 [Issues](https://github.com/yourusername/aiops-guard/issues)
-- 💬 [Discussions](https://github.com/yourusername/aiops-guard/discussions)
+## 📞 Contact & Support
+
+- 🐛 [Issues](https://github.com/zzzflame/aiops-guard/issues)
+- 💬 [Discussions](https://github.com/zzzflame/aiops-guard/discussions)
 - 📧 Email: 38222540@qq.com
+- 💬 WeChat: xiuzhendaonanxing
+
+## 👨‍💻 Author
+
+**暇格 (Xiage)**
+
+- GitHub: [@zzzflame](https://github.com/zzzflame)
+- Email: 38222540@qq.com
+- WeChat: xiuzhendaonanxing
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/aiops-guard&type=Date)](https://star-history.com/#yourusername/aiops-guard&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=zzzflame/aiops-guard&type=Date)](https://star-history.com/#zzzflame/aiops-guard&Date)
 
 ## 📈 Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/aiops-guard?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/aiops-guard?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/yourusername/aiops-guard?style=social)
+![GitHub stars](https://img.shields.io/github/stars/zzzflame/aiops-guard?style=social)
+![GitHub forks](https://img.shields.io/github/forks/zzzflame/aiops-guard?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/zzzflame/aiops-guard?style=social)
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the LLM community**
+**Made with ❤️ by 暇格 (Xiage) for the LLM community**
 
 [⬆ Back to Top](#️-aiopsguard)
 
