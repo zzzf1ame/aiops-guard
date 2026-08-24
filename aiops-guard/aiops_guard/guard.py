@@ -195,6 +195,81 @@ class AIOpsGuard:
         
         return wrapper
 
+    def _wrap_async(self, func: Callable[P, R]) -> Callable[P, R]:
+        """Wrap asynchronous function"""
+        @functools.wraps(func)
+        async def async_wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            # Extract input text (assumes first arg or 'prompt' kwarg)
+            input_text = ""
+            if args:
+                input_text = str(args[0])
+            elif "prompt" in kwargs:
+                input_text = str(kwargs["prompt"])
+            elif "messages" in kwargs:
+                # Handle chat format
+                messages = kwargs["messages"]
+                if isinstance(messages, list):
+                    input_text = " ".join(str(msg) for msg in messages)
+                else:
+                    input_text = str(messages)
+
+            # Count input tokens
+            input_tokens = self.count_tokens(input_text)
+
+            # Track execution time
+            start_time = time.time()
+            success = True
+            error_message = None
+            output_text = ""
+
+            try:
+                # Execute the async function
+                result = await func(*args, **kwargs)
+                output_text = str(result)
+                return result
+
+            except Exception as e:
+                success = False
+                error_message = str(e)
+                raise
+
+            finally:
+                end_time = time.time()
+                execution_time = end_time - start_time
+
+                # Count output tokens
+                output_tokens = self.count_tokens(output_text) if output_text else 0
+                total_tokens = input_tokens + output_tokens
+
+                # Calculate costs
+                input_cost, output_cost, total_cost = self.calculate_cost(
+                    input_tokens, output_tokens
+                )
+
+                # Create metrics
+                metrics = CallMetrics(
+                    agent_name=self.agent_name,
+                    model_name=self.model_name,
+                    input_tokens=input_tokens,
+                    output_tokens=output_tokens,
+                    total_tokens=total_tokens,
+                    input_cost_usd=input_cost,
+                    output_cost_usd=output_cost,
+                    total_cost_usd=total_cost,
+                    execution_time_seconds=execution_time,
+                    success=success,
+                    error_message=error_message,
+                )
+
+                # Track the call
+                self.tracker.add_call(metrics)
+
+                # Auto-print if enabled
+                if self.auto_print:
+                    self.tracker.print_summary()
+
+        return async_wrapper
+
 
 def track_llm_call(
     agent_name: str,
@@ -226,78 +301,3 @@ def track_llm_call(
         return guard(func)
     
     return decorator
-
-    def _wrap_async(self, func: Callable[P, R]) -> Callable[P, R]:
-        """Wrap asynchronous function"""
-        @functools.wraps(func)
-        async def async_wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
-            # Extract input text (assumes first arg or 'prompt' kwarg)
-            input_text = ""
-            if args:
-                input_text = str(args[0])
-            elif "prompt" in kwargs:
-                input_text = str(kwargs["prompt"])
-            elif "messages" in kwargs:
-                # Handle chat format
-                messages = kwargs["messages"]
-                if isinstance(messages, list):
-                    input_text = " ".join(str(msg) for msg in messages)
-                else:
-                    input_text = str(messages)
-            
-            # Count input tokens
-            input_tokens = self.count_tokens(input_text)
-            
-            # Track execution time
-            start_time = time.time()
-            success = True
-            error_message = None
-            output_text = ""
-            
-            try:
-                # Execute the async function
-                result = await func(*args, **kwargs)
-                output_text = str(result)
-                return result
-            
-            except Exception as e:
-                success = False
-                error_message = str(e)
-                raise
-            
-            finally:
-                end_time = time.time()
-                execution_time = end_time - start_time
-                
-                # Count output tokens
-                output_tokens = self.count_tokens(output_text) if output_text else 0
-                total_tokens = input_tokens + output_tokens
-                
-                # Calculate costs
-                input_cost, output_cost, total_cost = self.calculate_cost(
-                    input_tokens, output_tokens
-                )
-                
-                # Create metrics
-                metrics = CallMetrics(
-                    agent_name=self.agent_name,
-                    model_name=self.model_name,
-                    input_tokens=input_tokens,
-                    output_tokens=output_tokens,
-                    total_tokens=total_tokens,
-                    input_cost_usd=input_cost,
-                    output_cost_usd=output_cost,
-                    total_cost_usd=total_cost,
-                    execution_time_seconds=execution_time,
-                    success=success,
-                    error_message=error_message,
-                )
-                
-                # Track the call
-                self.tracker.add_call(metrics)
-                
-                # Auto-print if enabled
-                if self.auto_print:
-                    self.tracker.print_summary()
-        
-        return async_wrapper
